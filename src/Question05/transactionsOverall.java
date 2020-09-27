@@ -45,7 +45,6 @@ public class transactionsOverall {
 
         j.waitForCompletion(true);
 
-
     }
 
     public static class MapTransactionsOverall extends Mapper<LongWritable,Text, Text, Auxiliar>{
@@ -62,8 +61,6 @@ public class transactionsOverall {
             Integer ano = Integer.parseInt(colunas[1]);//pegando o ano
             String tipo = colunas[2];// pegando o tipo
             Float preco = Float.parseFloat(colunas[5]);//preco
-
-
 
 
             if(colunas[0].equals("Brazil")){
