@@ -64,9 +64,8 @@ public class transactionsPrice {
             Float preco = Float.parseFloat(colunas[5]);//preco
 
 
-            if(colunas[0].equals("Brazil")){
                 con.write(new Text("Tipo="+tipo+" Ano= "+ano+" precoMaior= "),new Auxiliar(1,preco));
-            }
+
 
         }
 
