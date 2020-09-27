@@ -1,4 +1,4 @@
-package numberPerYear;
+package Question01;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -14,7 +14,7 @@ import org.apache.log4j.BasicConfigurator;
 
 import java.io.IOException;
 
-public class NumberPerYear {
+public class Question01 {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
@@ -24,13 +24,13 @@ public class NumberPerYear {
 
         Path input = new Path("in/transactions.csv");
 
-        Path output = new Path("output/02NumberPerYear.txt");
+        Path output = new Path("output/Question01.txt");
 
-        Job j = new Job(c, "transactions-brazil");
+        Job j = new Job(c, "Question01");
 
-        j.setJarByClass(NumberPerYear.class);
-        j.setMapperClass(MapNumberPerYear.class);
-        j.setReducerClass(ReduceNumberPerYear.class);
+        j.setJarByClass(Question01.class);
+        j.setMapperClass(MapTransactionsBrazil.class);
+        j.setReducerClass(ReduceTransactionsBrazil.class);
 
         j.setMapOutputKeyClass(Text.class);
         j.setMapOutputValueClass(IntWritable.class);
@@ -42,31 +42,32 @@ public class NumberPerYear {
 
     }
 
-    public static class MapNumberPerYear extends Mapper<LongWritable, Text, Text, IntWritable> {
+    public static class MapTransactionsBrazil extends Mapper<LongWritable, Text, Text, IntWritable> {
         public void map(LongWritable key, Text value, Context con)
                 throws IOException, InterruptedException {
 
-            String linha = value.toString();
+            String line = value.toString();
 
-            if(linha.startsWith("country_or_area")) return;
+            if(line.startsWith("country_or_area")) return;
 
-            String[] column = linha.split(";");
+            String[] column = line.split(";");
+            if(!column[0].equals("Brazil")) return;
 
-            con.write(new Text(column[1]), new IntWritable(1));
+            con.write(new Text("Brazil"), new IntWritable(1));
         }
     }
 
-    public static class ReduceNumberPerYear extends Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class ReduceTransactionsBrazil extends Reducer<Text, IntWritable, Text, IntWritable> {
         public void reduce(Text word, Iterable<IntWritable> values, Context con)
                 throws IOException, InterruptedException {
 
-            int soma = 0;
+            int sum = 0;
 
             for(IntWritable obj: values) {
-                soma += obj.get();
+                sum += obj.get();
             }
 
-            con.write(word, new IntWritable(soma));
+            con.write(new Text("Brazil"), new IntWritable(sum));
 
         }
     }
