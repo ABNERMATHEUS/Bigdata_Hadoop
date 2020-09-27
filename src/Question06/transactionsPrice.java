@@ -76,9 +76,8 @@ public class transactionsPrice {
             double precoMaior=0;
 
             for(Auxiliar obj: values){
-                if(precoMaior<obj.getPreco()){
-                    precoMaior= obj.getPreco();
-                }
+               precoMaior = obj.getPreco();
+               break;
             }
 
 
