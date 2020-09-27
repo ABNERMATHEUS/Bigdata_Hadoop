@@ -1,0 +1,4 @@
+Export	codeCommodity=210690  cont=114
+Import	codeCommodity=180690  cont=121
+Re-Export	codeCommodity=210690  cont=30
+Re-Import	codeCommodity=999999  cont=17
